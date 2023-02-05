@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Container } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import myImage from "./assets/anixmateLogo.png";
 import squiggle from "./assets/squiggle.png";
 import SearchIcon from "@mui/icons-material/Search";
+import { demo_data, demo_reccomendations } from "./demo/demo_data";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DangerousIcon from "@mui/icons-material/Dangerous";
 const theme = createTheme({
  palette: {
   plain: {
@@ -23,40 +25,42 @@ function App() {
  const [titles, setTitles] = useState([]);
  const [searchScreen, setSearchScreen] = useState(true);
  const [recomended, setRecomended] = useState([]);
- const [isLoading, setIsLoading] = useState(false);
  const [inputValue, setInputValue] = useState("");
-
+ const [swipe, setSwipe] = useState(0);
  const handleChange = (event) => {
   setInputValue(event.target.value);
   console.log(inputValue);
  };
 
- const fetchData = () => {
-  console.log("submit");
+ const fetchRecomended = () => {
   // setIsLoading(true);
-  // setSearchScreen(!searchScreen);
-  // setTimeout(() => {
-  //  fetch("http://127.0.0.1:5000/getRecomended")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //    setRecomended(data.rec.map((x) => [x.id, x.title, x.lg_img_url]));
-  //    console.log(data);
-  //    setIsLoading(false);
-  //   })
-  //   .catch((error) => {
-  //    console.log(error);
-  //   });
-  // }, 5000);
+  setSearchScreen(!searchScreen);
+
+  // console.log(recomended);
+  // fetch("http://127.0.0.1:5000/getRecomended")
+  //  .then((response) => response.json())
+  //  .then((data) => {
+  //   setRecomended(data.rec.map((x) => [x.id, x.title, x.lg_img_url]));
+  //   console.log(data);
+  //   setIsLoading(false);
+  //  })
+  //  .catch((error) => {
+  //   console.log(error);
+  //  });
  };
 
  useEffect(() => {
-  fetch("http://127.0.0.1:5000/anime")
-   .then((response) => response.json())
-   .then((data) => {
-    // setAnime(data.key.map((x) => x));
-    setTitles(data.key.map((x) => x.title));
-   })
-   .catch((error) => console.error(error));
+  setTitles(demo_data.key.map((x) => x.title));
+  setRecomended(demo_reccomendations);
+  console.log(demo_reccomendations);
+  console.log(titles);
+  // fetch("http://127.0.0.1:5000/anime")
+  //  .then((response) => response.json())
+  //  .then((data) => {
+  //   // setAnime(data.key.map((x) => x));
+  // setTitles(data.key.map((x) => x.title));
+  //  })
+  //  .catch((error) => console.error(error));
  }, []);
 
  return (
@@ -79,6 +83,38 @@ function App() {
          alt="My Image"
          style={{ width: "33%", alignSelf: "center" }}
         />
+
+        <div
+         style={{
+          display: "flex",
+          width: "75%",
+          alignSelf: "center",
+          justifyContent: "center",
+         }}
+        >
+         <img
+          src={demo_reccomendations[swipe].entry.images.jpg.large_image_url}
+          alt=""
+          width={"50%"}
+         />
+         <div
+          width={"50%"}
+          className="text-m"
+          style={{
+           display: "flex",
+           flexDirection: "column",
+           justifyContent: "center",
+           alignItems: "center",
+           padding: "5px",
+          }}
+         >
+          {demo_reccomendations[swipe].entry.title}
+          <div style={{ display: "inherit" }}>
+           <DangerousIcon fontSize="large" onClick={setSwipe(swipe + 1)} />
+           <CheckCircleIcon fontSize="large" onClick={setSwipe(swipe + 1)} />
+          </div>
+         </div>
+        </div>
        </main>
       </div>
      </>
@@ -91,9 +127,9 @@ function App() {
          alt="My Image"
          style={{ width: "50%", alignSelf: "center" }}
         />
-        <form
-         method="post"
-         action="http://127.0.0.1:5000/recommendation"
+        <div
+         //  method="post"
+         //  action="http://127.0.0.1:5000/recommendation"
          style={{
           display: "flex",
           justifyContent: "center",
@@ -131,12 +167,12 @@ function App() {
           color="accent"
           variant="contained"
           type="submit"
-          // onClick={}
+          onClick={fetchRecomended}
           sx={{ color: "#545d72", alignSelf: "end" }}
          >
           <SearchIcon color="action" /> Search
          </Button>
-        </form>
+        </div>
        </main>
       </div>
      </>
