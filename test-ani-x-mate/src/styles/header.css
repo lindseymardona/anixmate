@@ -1,0 +1,12 @@
+@import "../index.css";
+.flex-header {
+ display: flex;
+ position: relative;
+ flex-direction: row;
+ justify-content: end;
+ padding: 3rem;
+}
+.title {
+ position: absolute;
+ left: 0;
+}

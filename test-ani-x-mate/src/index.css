@@ -1,0 +1,42 @@
+:root {
+ font-family: "Montserrat", sans-serif;
+ --bg1: #616d8b;
+ --b2: #545d72;
+ --acc1: #82b8d7;
+ --acc2: #ee9691;
+ --primaryText: #e5ecff;
+ --secondaryText: #fafafa;
+}
+.text-xl {
+ font-size: 48px;
+}
+.text-l {
+ font-size: 40px;
+}
+.text-m {
+ font-size: 32px;
+}
+.text-s {
+ font-size: 20pt;
+}
+.center-element {
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
+ /* position: absolute; */
+ /* top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%); */
+}
+.background-image {
+ background-image: "./";
+ background-size: cover;
+ opacity: 0.5;
+}
+body {
+ background-color: var(--bg1);
+ color: var(--primaryText);
+}
+input {
+ border-color: var(--acc1);
+}
