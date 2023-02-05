@@ -17,6 +17,9 @@ const theme = createTheme({
   accent: {
    main: "#82b8d7",
   },
+  accent2: {
+   main: "#ee9691",
+  },
  },
 });
 
@@ -32,8 +35,12 @@ function App() {
   console.log(inputValue);
  };
 
+ const [min, setMin] = useState(1);
+ const [max, setMax] = useState(100);
+
  const fetchRecomended = () => {
   // setIsLoading(true);
+  setSwipe(Math.floor(Math.random() * (max - min + 1)) + min);
   setSearchScreen(!searchScreen);
 
   // console.log(recomended);
@@ -81,7 +88,7 @@ function App() {
         <img
          src={myImage}
          alt="My Image"
-         style={{ width: "33%", alignSelf: "center" }}
+         style={{ width: "25%", alignSelf: "center" }}
         />
 
         <div
@@ -95,10 +102,12 @@ function App() {
          <img
           src={demo_reccomendations[swipe].entry.images.jpg.large_image_url}
           alt=""
-          width={"50%"}
+          className="shadow"
+          width={"30%"}
+          display={{ borderRadius: "20px" }}
          />
          <div
-          width={"50%"}
+          width={"50vw"}
           className="text-m"
           style={{
            display: "flex",
@@ -109,14 +118,48 @@ function App() {
           }}
          >
           {demo_reccomendations[swipe].entry.title}
-          <div style={{ display: "inherit" }}>
-           <DangerousIcon fontSize="large" onClick={setSwipe(swipe + 1)} />
-           <CheckCircleIcon fontSize="large" onClick={setSwipe(swipe + 1)} />
+          <div
+           style={{
+            display: "flex",
+            width: "250px",
+            position: "relative",
+           }}
+          >
+           <DangerousIcon
+            fontSize="large"
+            color="accent2"
+            className="shadow"
+            width={"50%"}
+            style={{
+             position: "absolute",
+             left: 10,
+            }}
+           />
+           <CheckCircleIcon
+            fontSize="large"
+            color="accent"
+            className="shadow"
+            width={"50%"}
+            style={{
+             position: "absolute",
+
+             right: 10,
+            }}
+           />
           </div>
          </div>
         </div>
        </main>
       </div>
+      <Button
+       color="accent"
+       variant="contained"
+       type="submit"
+       onClick={fetchRecomended}
+       sx={{ color: "#545d72", width: "10rem" }}
+      >
+       Return
+      </Button>
      </>
     ) : (
      <>
